@@ -1,0 +1,80 @@
+Exercice 2:
+
+1. Le nom de la machine est www.w3.org et le nom de domaine est w3.org.
+
+2. La première ligne nous donne l'addresse IPv4 de la machine
+   et la seconde ligne nous donne le sous-domaine pointant sur
+   le serveur mail.
+
+   MacBook-Pro-de-Irwin:TP1 irwin$ host w3.org
+   w3.org has address 128.30.52.37
+   w3.org has IPv6 address 2603:400a:ffff:804:801e:34::25
+   w3.org mail is handled by 50 bart.w3.org.
+   w3.org mail is handled by 10 mimas.w3.org.
+   w3.org mail is handled by 10 titan.w3.org.
+
+3. Le site fonctionne toujours, cependant on peut noter que le navigateur
+   m'avertit d'un défaut de sécurité, le certificat ne pouvant pas être vérifié.
+
+   L'utilité des nom de domaine est que l'on a pas besoin de retenir par coeur
+   une adresse IP. De plus si l'IP de la machine hébergeant le site change,
+   le domaine assure que le site fonctionnera toujours.
+
+4. La commande affiche tous les routeurs par lequel passe la requête PING.
+
+   Le nom du routeur situé à la sortie de l'université est gwetud.u-pem.fr.
+   L'université est connecté au réseau u-pem.fr.
+
+   Le requête passe par les réseaux renater.fr, geant.net, zayo.com, akamai.com et mit.edu.
+
+5. La machine possède 4 IP mais aucune ne permet d'afficher le site.
+   Ceci s'explique par le fait que GitHub s'occupe lui même de rediriger les requête pour
+   équilibrer le réseau. Accéder directement à l'ip ne fonctionne pas car ça n'est pas
+   GitHub qui est à l'origine de la redirection.
+
+6. La machine est situé à Osaka au Japon.
+   La commande ping résulte en une latence d'environ 230ms ce qui est normal étant
+   donné que la machine se trouve à l'autre bout du monde.
+
+7. Avec le domaine forax.github.io on note que la machine se situe Bucarest en Roumanie.
+   Et la latence est d'environ 9ms ce qui est normal.
+
+
+Exercice 3 :
+
+1. Le répertoire /etc/services contient tous les services réseau utilisé par la machine.
+
+2. La commande grep permet d'afficher les lignes d'un fichier correspondant au paterne
+   passé en argument.
+
+   Le port TCP du service echo est 7.
+
+3. La machine se met à répéter ce que j'envoie.
+
+4. La machine répond la date et l'heure actuelle.
+
+5. Le port HTTP est 80. (Et 443 pour HTTPS)
+
+
+Exercice 4 :
+
+1. Le header est le premier paragraphe qui indique le code de réponse, le serveur web utilisé,
+   la taille du contenu, etc.
+
+2. Les trois valeurs sont : Le protocole utilisé pour envoyer la réponse, Le code de réponse et
+   le message de la réponse.
+
+3. Le serveur web est Apache.
+
+4. La valeur content-type correspond au type de données envoyées.
+
+5. La valeur content-legth correspond à la taille de la réponse.
+
+6. Cette fois-ci la réponse est une erreur 404, le fichier n'existe pas.
+   Le serveur web reste le même, le protocole également.
+   Cette fois ci le code de réponse est 404 et le message est : Not found.
+
+7. Enfin, cette requête nous renvoie une nouvelle réponse, code 302 message "Found".
+   Le fichier existe et a été trouvé mais il se trouve à un autre endroit.
+
+   La valeur location nous indique où trouver le fichier en question.
