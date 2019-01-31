@@ -36,7 +36,7 @@ Exercice 2:
    La commande ping résulte en une latence d'environ 230ms ce qui est normal étant
    donné que la machine se trouve à l'autre bout du monde.
 
-7. Avec le domaine forax.github.io on note que la machine se situe Bucarest en Roumanie.
+7. Avec le domaine forax.github.io on note que la machine se situe en Californie aux Étars-Unis.
    Et la latence est d'environ 9ms ce qui est normal.
 
 
