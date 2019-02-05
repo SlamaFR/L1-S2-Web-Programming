@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Compte Rendu de TP2</title>
+    <meta charset="UTF-8">
+</head>
+<body>
+<h1>Compte Rendu de TP2</h1>
+<p>Irwin Madet</p>
+
+<h2>Exercice: Document de base</h2>
+<ol>
+    <li>
+        <h3>Recopiez dans votre fichier de compte-rendu le squelette de document HTML suivant</h3>
+        <p><i>Fait.</i></p>
+    </li>
+
+    <li>
+        <h3>À quoi servent les tags h1, h2 et h3 ?</h3>
+        <p>Les tags <code>&lt;h1&gt;</code>, <code>&lt;h2&gt;</code>, et <code>&lt;h3&gt;</code> servent à insérer des
+            titres hiérarchiques.</p>
+    </li>
+    <li>
+        <h3>À quoi sert le tag p ?</h3>
+        <p>Le tag <code>&lt;p&gt;</code> sert à insérer un paragraphe.</p>
+    </li>
+
+    <li>
+        <h3>Ajoutez à votre compte-rendu la phrase suivante :</h3>
+        <p>Les tags HTML commencent par une balise ouvrante &lt;foo&gt; et finissent par une balise
+            fermante&lt;/foo&gt;</p>
+    </li>
+
+    <li>
+        <h3>Comment mettre en gras ou en italique ?</h3>
+        <p>Avec les balises <code><i>&lt;i&gt;texte&lt;/i&gt;</i></code> et <code><b>&lt;b&gt;texte&lt;/b&gt;</b></code>
+        </p>
+    </li>
+
+    <li>
+        <h3>Et comment faire pour mettre un mot à la fois en gras et en italique ?</h3>
+        <p>On met une des balises dans l'autres comme ceci : <code><i>&lt;i&gt;<b>&lt;b&gt;texte&lt;/b&gt;</b>&lt;/i&gt;</i></code>
+        </p>
+    </li>
+
+    <li>
+        <h3>En fait, votre compte-rendu n'est pas vraiment en HTML, vous devriez organiser les questions pour
+            qu'elles soient automatiquement numérotées par le navigateur. Comment faire ? </h3>
+        <p>On met nos réponses sous forme de liste ordonnée avec les tags <code>&lt;ol&gt;</code> et
+            <code>&lt;li&gt;</code>.</p>
+    </li>
+
+    <li>
+        <h3>On souhaite que le titre de la fenêtre du navigateur soit "Compte Rendu de TP2". Comment faire ? </h3>
+        <p>On ajoute le tag <code>&lt;title&gt;</code> dans le <code>&lt;head&gt;</code>.</p>
+    </li>
+
+    <li>
+        <h3>Ajouter un lien vers le cours</h3>
+        <p><a href="http://forax.github.io/course/progweb/#/">Cours de programmation web</a></p>
+    </li>
+
+    <li>
+        <h3>Dessiner l'arbre des éléments constituant la page</h3>
+        <img src="mon-super-arbre.jpg" alt="" width="800">
+    </li>
+</ol>
+
+<h2>Exercice: Les listes et les tables</h2>
+<ol>
+    <li>
+        <h3>Dans votre compte rendu, écrivez la liste suivante sous forme d'une liste numérotée :</h3>
+        <ol>
+            <li>math</li>
+            <li>physique</li>
+            <li>français</li>
+        </ol>
+    </li>
+
+    <li>
+        <h3>Recopiez le code de la liste de la question précédente et modifiez-le pour que la liste ne soit plus une
+            liste numérotée mais une liste à puces :</h3>
+        <ul>
+            <li>math</li>
+            <li>physique</li>
+            <li>français</li>
+        </ul>
+    </li>
+
+    <li>
+        <h3>Dans votre compte rendu, écrivez la table de multiplication suivante sous forme d'une table HTML :</h3>
+        <table style="text-align: right;"> <!-- Je me permet d'utiliser un peu de CSS pour embellir le tableau. -->
+            <tr>
+                <td></td>
+                <td>1</td>
+                <td>2</td>
+                <td>3</td>
+                <td>4</td>
+            </tr>
+            <tr>
+                <td>1</td>
+                <td>1</td>
+                <td>2</td>
+                <td>3</td>
+                <td>4</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>2</td>
+                <td>4</td>
+                <td>6</td>
+                <td>8</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>3</td>
+                <td>6</td>
+                <td>9</td>
+                <td>12</td>
+            </tr>
+            <tr>
+                <td>4</td>
+                <td>4</td>
+                <td>8</td>
+                <td>12</td>
+                <td>16</td>
+            </tr>
+        </table>
+    </li>
+
+    <li>
+        <h3>Modifiez la table pour que la première ligne et la première colonne soient considérées comme des
+            titres :</h3>
+        <table style="text-align: right;"> <!-- Je me permet d'utiliser un peu de CSS pour embellir le tableau. -->
+            <thead>
+            <tr>
+                <th></th>
+                <th>1</th>
+                <th>2</th>
+                <th>3</th>
+                <th>4</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <th>1</th>
+                <td>1</td>
+                <td>2</td>
+                <td>3</td>
+                <td>4</td>
+            </tr>
+            <tr>
+                <th>2</th>
+                <td>2</td>
+                <td>4</td>
+                <td>6</td>
+                <td>8</td>
+            </tr>
+            <tr>
+                <th>3</th>
+                <td>3</td>
+                <td>6</td>
+                <td>9</td>
+                <td>12</td>
+            </tr>
+            <tr>
+                <th>4</th>
+                <td>4</td>
+                <td>8</td>
+                <td>12</td>
+                <td>16</td>
+            </tr>
+            </tbody>
+        </table>
+    </li>
+
+    <li>
+        <h3>On souhaite ajouter une case faisant 2 colonnes et une case faisant deux lignes dans une nouvelle
+            table :</h3>
+        <!-- Je me permet d'utiliser un peu de CSS pour embellir le tableau. -->
+        <table>
+            <tr>
+                <td style="border: 1px solid;">Case 1x1</td>
+                <td style="border: 1px solid;">Case 1x1</td>
+                <td rowspan="2" style="border: 1px solid;">Case 1x2</td>
+            </tr>
+            <tr>
+                <td colspan="2" style="border: 1px solid;">Case 2x1</td>
+            </tr>
+        </table>
+
+        <p>Je connaissais déjà les attributs <code>colspan</code> et <code>rowspan</code>.</p>
+        <p>
+            Cependant, on pouvait trouver cette information dans la doc HTLM5 :<br>
+            <a href="https://www.w3.org/TR/html5/tabular-data.html#attributes-common-to-td-and-th-elements">4.9.11. Attributes common to &lt;td&gt; and &lt;th&gt; elements</a>
+        </p>
+    </li>
+</ol>
+</body>
+</html>
