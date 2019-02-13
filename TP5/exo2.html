@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <style>
+        p {
+            clear: both;
+        }
+
+        div.cell {
+            background-color: silver;
+            margin: 0;
+            padding: 15px;
+            border: 1px solid black;
+            float: left;
+        }
+
+        .white {
+            background-color: #efefef !important;
+        }
+
+        .black {
+            background-color: #212121 !important;
+        }
+
+        .red {
+            background-color: #880000 !important;
+        }
+    </style>
+    <script>
+        "use strict";
+
+        /**
+         * Dessine une case du damier.
+         *
+         * @param color Booléen déterminant si la case doit être noire ou blanche.
+         * @param red Booléen
+         */
+        function drawCheckerCell(color, red) {
+            document.write('<div class="cell ' + (color ? 'white' : 'black') + ' ' + (red ? 'red' : '') + '"></div>');
+        }
+
+        /**
+         * Dessine une ligne du damier.
+         *
+         * @param n Longueur de la ligne.
+         * @param ligne Indice de la ligne (utilisé pour déterminer la couleur de chaque case).
+         * @param diagonale Booléen déterminant s'il faut afficher la diagonale en rouge.
+         */
+        function drawCheckerLine(n, ligne, diagonale) {
+            document.write("<div style='clear: both;'>");
+            for (let i = 0; i < n; i++) drawCheckerCell((i + ligne) % 2 === 0, diagonale && (i === ligne || i === n - ligne - 1));
+            document.write("</div>");
+        }
+
+        /**
+         * Dessine un damier.
+         *
+         * @param n Longueur des côtés du damier.
+         * @param diagonale Booléen déterminant s'il faut afficher la diagonale en rouge.
+         */
+        function drawCheckerBoard(n, diagonale) {
+            document.write('<p>Carré de ' + n + 'x' + n + '</p>');
+            document.write('<div style="display: inline-block;">');
+            for (let i = 0; i < n; i++) drawCheckerLine(n, i, diagonale);
+            document.write('</div>');
+        }
+
+    </script>
+</head>
+<body>
+<h2>Damier</h2>
+<script>
+    drawCheckerBoard(5, true);
+</script>
+<script>
+    drawCheckerBoard(3);
+</script>
+
+
+</body>
+</html>

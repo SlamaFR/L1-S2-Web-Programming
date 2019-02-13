@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Compte-rendu de TP 5</title>
+
+    <link rel="stylesheet" href="compte-rendu-tp.css">
+
+</head>
+<body>
+<div>
+    <h1 class="title">Compte-rendu du TP 5</h1>
+    <div class="right name">Irwin Madet</div>
+</div>
+
+<div class="divider"></div>
+
+<section>
+    <h2 class="title">Exercice 1 : <span class="subtitle">Hello World</span></h2>
+    <ol>
+        <li>
+            <h3>Comment fait-on pour ouvrir la console développeur ?</h3>
+            <p>On appuie sur la touche <kbd>F12</kbd> ou la combinaison <kbd><kbd>Ctrl</kbd> + <kbd>Alt</kbd> +
+                <kbd>I</kbd></kbd>.</p>
+        </li>
+
+        <li>
+            <h3>Afficher les chiffres de 0 à 9 dans la console.</h3>
+            <p>On utilise le code suivant :</p>
+
+            <pre>
+for (let $i = 0; $i < 10; $i++) {
+    console.log($i)
+}</pre>
+        </li>
+
+        <li>
+            <h3>Modifier le code pour ne pas afficher les multiples de 3.</h3>
+            <p>On ajoute la condition suivante :</p>
+
+            <pre>if ($i % 3 === 0) continue;</pre>
+        </li>
+
+        <li>
+            <h3>Écrire une fonction affichant les <code>n</code> premiers entiers avec <code>n</code> en paramètre.</h3>
+            <p><i>Code :</i></p>
+            <pre>
+function afficher_n_premiers_entiers($n) {
+    for (let $i = 0; $i < $n; $i++) {
+        console.log($i);
+    }
+}</pre>
+        </li>
+    </ol>
+</section>
+
+<section>
+    <h2 class="title">Exercice 2 : <span class="subtitle">Damier</span></h2>
+    <ol>
+        <li>
+            <h3>Expliquer ce que fait la ligne <code>"use strict";</code>.</h3>
+            <p>Cette ligne indique au navigateur qu'il doit utilise JavaScript en "strict mode". <br>
+                Ceci empêche d'utiliser des variables indéfinies et par conséquent force à rédiger du beau code avec du
+                sens.</p>
+        </li>
+
+        <li>
+            <h3>Expliquez ce que fait l'appel <code>document.write()</code>.</h3>
+            <p>Cet appel permet d'ajouter du contenu à l'HTML de la page, directement via JavaScript.</p>
+        </li>
+
+        <li>
+            <h3>Ajouter une fonction <code>drawCheckerLine()</code>.</h3>
+            <p><i>Code :</i></p>
+            <pre>
+function drawCheckerLine() {
+   document.write('&lt;div&gt;');
+   for (let $i = 0; $i < 5; $i++) drawCheckerCell();
+   document.write('&lt;/div&gt;');
+}</pre>
+        </li>
+
+        <li>
+            <h3>Ajouter une fonction <code>drawCheckerBoard()</code>.</h3>
+            <p><i>Code :</i></p>
+            <pre>function drawCheckerBoard($n) {
+   for (let $i = 0; $i < $n; $i++) drawCheckerLine();
+}</pre>
+        </li>
+
+        <li>
+            <h3>Modifiez la fonction <code>drawCheckerBoard()</code> pour que dans la page web, on puisse afficher un carré de 5 par 5 puis un carré de 3 par 3.</h3>
+            <p><i>Code :</i></p>
+            <pre>function drawCheckerBoard(n, diagonale) {
+    document.write('&lt;p&gt;Carré de ' + n + 'x' + n + '&lt;/p&gt;');
+    document.write('&lt;div style="display: inline-block;"&gt;');
+    for (let i = 0; i < n; i++) drawCheckerLine(n, i, diagonale);
+    document.write('&lt;/div&gt;');
+}</pre>
+        </li>
+
+        <li>
+            <h3>Complétez le style de la balise style du document pour définir une case noire et une case blanche et utilisez ce style pour les cases du damier.</h3>
+            <p><i>Code :</i></p>
+            <pre>.white {
+    background-color: #efefef !important;
+}
+
+.black {
+    background-color: #212121 !important;
+}</pre>
+        </li>
+
+        <li>
+            <h3>Ajoutez un style de case rouge puis ajoutez un dernier paramètre à <code>drawCheckerBoard()</code> pouvant être vrai ou faux.</h3>
+            <p>Voir fonctions finales.</p>
+        </li>
+
+        <li>
+            <h3>Testez en affichant la diagonale du premier carré.</h3>
+            <p>Voir page finale.</p>
+        </li>
+    </ol>
+</section>
+
+</body>
+</html>
