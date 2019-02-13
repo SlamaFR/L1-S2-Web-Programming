@@ -1,0 +1,58 @@
+body {
+    font-family: sans-serif;
+}
+
+h1 {
+    font-size: 24pt;
+}
+
+h2 {
+    font-size: 18pt;
+    color: dodgerblue;
+}
+
+h3 {
+    font-size: 16pt;
+}
+
+.centered {
+    text-align: center;
+}
+
+.right {
+    text-align: right;
+}
+
+a {
+    color: red;
+}
+
+a:hover {
+    color: teal;
+}
+
+ol {
+    list-style-type: lower-roman;
+}
+
+table {
+    width: 100%;
+}
+
+table th {
+    text-align: center;
+    font-variant: small-caps;
+    padding: 0.25em;
+}
+
+table td {
+    padding: 0.25em;
+}
+
+tr:nth-child(even) {
+    background-color: rgb(80%, 80%, 90%);
+}
+
+tr:hover {
+    background-color: #1c780c;
+}
