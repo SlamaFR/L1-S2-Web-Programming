@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <script>
+        "use strict";
+
+        function timeToCoordinates(t) {
+            let rad = t * 2 * Math.PI / 60 - Math.PI / 2;
+            return [Math.cos(rad), Math.sin(rad)]
+        }
+
+        function drawElement(context, style, width, f) {
+            context.strokeStyle = style;
+            context.lineWidth = width;
+            context.beginPath();
+            f();
+            context.stroke();
+        }
+
+        function clear(context) {
+            context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+        }
+
+        function draw(context, date) {
+
+            let scale = Math.min(context.canvas.width, context.canvas.height);
+            let offset = (scale / 2 - scale * 10 / 11);
+
+            let trotteuse = timeToCoordinates(date.getSeconds());
+            let minutes = timeToCoordinates(date.getMinutes());
+            let heures = timeToCoordinates(date.getHours() * 60 / 12);
+
+            drawElement(context, "#0044EE", 3, function () {
+                context.arc(scale / 2, scale / 2, scale / 2 - 10, 0, 2 * Math.PI);
+            });
+
+            for (let i = 0; i < 60; i++) {
+                let tick = timeToCoordinates(i + 1);
+                drawElement(context, "##0044EE", 3, function () {
+                    if ((i + 1) % 5 === 0) context.moveTo(scale / 2 - tick[0] * offset * 37 / 40, scale / 2 - tick[1] * offset * 37 / 40);
+                    else context.moveTo(scale / 2 - tick[0] * offset * 39 / 40, scale / 2 - tick[1] * offset * 39 / 40);
+                    context.lineTo(scale / 2 - tick[0] * offset, scale / 2 - tick[1] * offset);
+                });
+            }
+
+            drawElement(context, "#000", 1, function () {
+                context.moveTo(scale / 2, scale / 2);
+                context.lineTo(scale / 2 - minutes[0] * offset, scale / 2 - minutes[1] * offset);
+                context.moveTo(scale / 2, scale / 2);
+                context.lineTo(scale / 2 - heures[0] * offset * 7 / 10, scale / 2 - heures[1] * offset * 7 / 10);
+            });
+            drawElement(context, "#AA0000", 1, function () {
+                context.moveTo(scale / 2, scale / 2);
+                context.lineTo(scale / 2 - trotteuse[0] * offset, scale / 2 - trotteuse[1] * offset);
+            });
+        }
+
+        function startClock(clockId) {
+            window.setInterval(function () {
+                let context = document.getElementById(clockId).getContext("2d");
+                clear(context);
+                draw(context, new Date());
+            }, 1000);
+        }
+    </script>
+</head>
+<body>
+<h2>Horloge 2</h2>
+<canvas id="clock1" width="200" height="200">
+</canvas>
+<canvas id="clock2" width="300" height="400">
+</canvas>
+<canvas id="clock3" width="1000" height="1000">
+</canvas>
+<script>
+    startClock('clock1');
+    startClock('clock2');
+    startClock('clock3');
+</script>
+
+
+</body>
+</html>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <script>
+        "use strict";
+
+        function refresh() {
+            let date = new Date();
+            clear();
+            draw(date);
+        }
+
+        function loaded() {
+            window.setInterval(refresh, 1000);
+        }
+    </script>
+</head>
+<body onload="loaded()">
+<h2>Horloge</h2>
+<canvas id="clock" width="600" height="600">
+</canvas>
+<script>
+
+    function timeToCoordinates(t) {
+        let rad = t * 2 * Math.PI / 60 + Math.PI / 2;
+        return [Math.cos(rad) * 200, Math.sin(rad) * 200]
+    }
+
+    var canvas = document.getElementById('clock');
+    var context = canvas.getContext("2d");
+
+    function clear() {
+        context.clearRect(0, 0, 600, 600);
+    }
+
+    function draw(date) {
+        let trotteuse = timeToCoordinates(date.getSeconds());
+        let minutes = timeToCoordinates(date.getMinutes());
+        let heures = timeToCoordinates(date.getHours() * 60 / 12);
+
+        drawElement(context, "#0044EE", 3, function() {
+            context.arc(300, 300, 220, 0, 2 * Math.PI);
+        });
+
+        for (let i = 0; i < 60; i++) {
+            let tick = timeToCoordinates(i + 1);
+            drawElement(context, "##0044EE", 3, function() {
+                if ((i + 1) % 5 === 0) context.moveTo(300 - tick[0] * 37 / 40, 300 - tick[1] * 37 / 40);
+                else context.moveTo(300 - tick[0] * 39 / 40, 300 - tick[1] * 39 / 40);
+                context.lineTo(300 - tick[0], 300 - tick[1]);
+            });
+        }
+
+        drawElement(context, "#000", 1, function() {
+            context.moveTo(300, 300);
+            context.lineTo(300 - minutes[0], 300 - minutes[1]);
+            context.moveTo(300, 300);
+            context.lineTo(300 - heures[0] * 7 / 10, 300 - heures[1] * 7 / 10);
+        });
+        drawElement(context, "#AA0000", 1, function() {
+            context.moveTo(300, 300);
+            context.lineTo(300 - trotteuse[0], 300 - trotteuse[1]);
+        });
+    }
+
+    function drawElement(context, style, width, f) {
+        context.strokeStyle = style;
+        context.lineWidth = width;
+        context.beginPath();
+        f();
+        context.stroke();
+    }
+
+</script>
+
+
+</body>
+</html>

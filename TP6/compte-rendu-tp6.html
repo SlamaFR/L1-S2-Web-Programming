@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Compte-rendu de TP 6</title>
+
+    <link rel="stylesheet" href="compte-rendu-tp.css">
+
+</head>
+<body>
+<div>
+    <h1 class="title">Compte-rendu du TP 6</h1>
+    <div class="right name">Irwin Madet</div>
+</div>
+
+<div class="divider"></div>
+
+<section>
+    <h2 class="title">Exercice 1 : <span class="subtitle">Horloge</span></h2>
+    <ol>
+        <li>
+            <h3>Expliquez ce que fait la balise <code>&lt;body onload="loaded()"&gt;</code></h3>
+            <p>Cette balise permet d'appeler la fonction <code>loaded()</code> lorsque la page a fini de charger.</p>
+        </li>
+
+        <li>
+            <h3>Comment faire pour afficher un "tick" toutes les secondes en utilisant <code>setTimeout()</code> ?</h3>
+            <p>On déplace la ligne <code>setTimeout(refresh, 1000);</code> dans la fonction <code>refresh()</code>.
+                De cette manière, à chaque appel, la fonction se reprogramme elle-même :</p>
+            <pre>function refresh() {
+    console.log("tick !");
+    window.setTimeout(refresh, 1000);
+}</pre>
+        </li>
+
+        <li>
+            <h3>Transformez le code pour utiliser <code>window.setInterval()</code>.</h3>
+            <p><i>Code :</i></p>
+            <pre>function refresh() {
+    console.log("tick !");
+}
+
+function loaded() {
+    window.setInterval(refresh, 1000);
+}</pre>
+        </li>
+
+        <li>
+            <h3>Transformez le code pour afficher la date courante avec <code>new Date()</code>.</h3>
+            <p><i>Code :</i></p>
+            <pre>function refresh() {
+    let date = new Date();
+    let hours = date.getHours();
+    let minutes = date.getMinutes();
+    let seconds = date.getSeconds();
+    console.log(hours + ":" + minutes + ":" + seconds);
+}</pre>
+        </li>
+
+        <li>
+            <ul>
+                <li>
+                    <h4>Retirez les commentaires autour du code en bas du fichier. Que fait ce code ?</h4>
+                    <p>Ce code dessine une ligne horizontale.</p>
+                </li>
+                <li>
+                    <h4>Modifiez-le pour afficher une aiguille indiquant midi.</h4>
+                    <p><i>Code :</i></p>
+                    <pre>context.beginPath();
+context.moveTo(300, 100);
+context.lineTo(300, 0);
+context.stroke();</pre>
+                </li>
+            </ul>
+        </li>
+
+        <li>
+            <h3>Dessinez un cercle de rayon 220 pixels centré dans le canvas.</h3>
+            <p><i>Code :</i></p>
+            <pre>context.beginPath();
+context.arc(300, 300, 220, 0, 2 * Math.PI);
+context.moveTo(300, 300);
+context.lineTo(300, 100);
+context.stroke();</pre>
+        </li>
+
+        <li>
+            <h3>Indiquez les formules mathématiques qui permettent pour une valeur de 0 à 60 secondes de trouver les
+                coordonnées x et y du sommet de l'aiguille.</h3>
+            <p><i>Code :</i></p>
+            <pre>function timeToCoordinates(t) {
+    let rad = t * 2 * Math.PI / 60 + Math.PI / 2;
+    return [Math.cos(rad) * 200, Math.sin(rad) * 200]
+}</pre>
+        </li>
+
+        <li>
+            <h3>Modifiez le code pour faire bouger la trotteuse (nom de l'aiguille des secondes) en fonction des
+                secondes.</h3>
+            <p>On créer deux nouvelles fonctions qui se chargent d'effacer le canvas et de redessiner l'horloge mise à
+                jour :</p>
+            <pre>function clear() {
+    context.clearRect(0, 0, 600, 600);
+}
+
+function draw(date) {
+    let trotteuse = timeToCoordinates(date.getSeconds());
+    context.beginPath();
+    context.arc(300, 300, 220, 0, 2 * Math.PI);
+    context.moveTo(300, 300);
+    context.lineTo(300 - trotteuse[0], 300 - trotteuse[1]);
+    context.stroke();
+}</pre>
+            <p>Puis dans la fonction <code>refresh()</code>, on appelle ces deux fonctions :</p>
+            <pre>function refresh() {
+    let date = new Date();
+    clear();
+    draw(date);
+}</pre>
+        </li>
+
+        <li>
+            <h3>Modifiez votre code pour afficher la trotteuse en rouge et le cadre en bleu.
+                Réglez à 3 pixels l'épaisseur du trait du cadre.</h3>
+            <p><i>Code :</i></p>
+            <pre>function draw(date) {
+    let trotteuse = timeToCoordinates(date.getSeconds());
+    context.beginPath();
+    context.strokeStyle="#0044EE";
+    context.lineWidth=3;
+    context.arc(300, 300, 220, 0, 2 * Math.PI);
+    context.stroke();
+
+    context.beginPath();
+    context.moveTo(300, 300);
+    context.strokeStyle="#AA0000";
+    context.lineWidth=1;
+    context.lineTo(300 - trotteuse[0], 300 - trotteuse[1]);
+    context.stroke();
+}</pre>
+        </li>
+
+        <li>
+            <h3>Affichez en plus de la trotteuse, l'aiguille des minutes (la grande aiguille). </h3>
+            <p><i>Code :</i></p>
+            <pre>let minutes = timeToCoordinates(date.getMinutes());
+context.strokeStyle = "#000";
+context.lineWidth = 1;
+context.beginPath();
+context.moveTo(300, 300);
+context.lineTo(300 - minutes[0], 300 - minutes[1]);
+context.moveTo(300, 300);
+context.stroke();</pre>
+        </li>
+
+        <li>
+            <h3>Ajoutez l'aiguille des heures, qui doit être d'une longueur inférieure aux deux autres aiguilles (disons
+                70%), mais plus large, toujours en essayant de 'factoriser' le code.</h3>
+            <p><i>Code :</i></p>
+            <pre>function draw(date) {
+    let trotteuse = timeToCoordinates(date.getSeconds());
+    let minutes = timeToCoordinates(date.getMinutes());
+    let heures = timeToCoordinates(date.getHours() * 60 / 12);
+    context.strokeStyle = "#0044EE";
+    context.lineWidth = 3;
+    context.beginPath();
+    context.arc(300, 300, 220, 0, 2 * Math.PI);
+    context.stroke();
+
+    context.strokeStyle = "#000";
+    context.lineWidth = 1;
+    context.beginPath();
+    context.moveTo(300, 300);
+    context.lineTo(300 - minutes[0], 300 - minutes[1]);
+    context.moveTo(300, 300);
+    context.lineTo(300 - heures[0] * 7 / 10, 300 - heures[1] * 7 / 10);
+    context.stroke();
+
+    context.strokeStyle = "#AA0000";
+    context.beginPath();
+    context.moveTo(300, 300);
+    context.lineTo(300 - trotteuse[0], 300 - trotteuse[1]);
+    context.stroke();
+}</pre>
+        </li>
+
+        <li>
+            <h3>Ajoutez 12 traits de graduation ('ticks'), autour du cadre de l'horloge.</h3>
+            <p><i>Code :</i></p>
+            <pre>for (let i = 0; i < 60; i++) {
+    let tick = timeToCoordinates(i + 1);
+    context.beginPath();
+    if ((i + 1) % 5 === 0) context.moveTo(300 - tick[0] * 37 / 40, 300 - tick[1] * 37 / 40);
+    else context.moveTo(300 - tick[0] * 39 / 40, 300 - tick[1] * 39 / 40);
+    context.lineTo(300 - tick[0], 300 - tick[1]);
+    context.stroke();
+}</pre>
+            <p><i>Je me suis permis d'ajouter 60 ticks et de rendre les multiples de 5 plus grands.</i></p>
+        </li>
+
+        <li>
+            <h3 style="color: orange;">Optimisations du code</h3>
+            <p>Afin d'éviter de répéter les mêmes étapes lors du dessin d'un élément (<code>context.beginPath();</code>
+                et <code>context.stroke();</code>), j'ai créé une fonction qui se charge de dessiner un élément avec la
+                couleur, l'épaisseur et les instructions en paramètre :</p>
+            <pre>function drawElement(context, style, width, f) {
+    context.strokeStyle = style;
+    context.lineWidth = width;
+    context.beginPath();
+    f();
+    context.stroke();
+}</pre>
+            <p>Grâce à cette fonction, voici la fonction <code>draw()</code> finale :</p>
+            <pre>function draw(date) {
+    let trotteuse = timeToCoordinates(date.getSeconds());
+    let minutes = timeToCoordinates(date.getMinutes());
+    let heures = timeToCoordinates(date.getHours() * 60 / 12);
+
+    drawElement(context, "#0044EE", 3, function() {
+        context.arc(300, 300, 220, 0, 2 * Math.PI);
+    });
+
+    for (let i = 0; i < 60; i++) {
+        let tick = timeToCoordinates(i + 1);
+        drawElement(context, "##0044EE", 3, function() {
+            if ((i + 1) % 5 === 0) context.moveTo(300 - tick[0] * 37 / 40, 300 - tick[1] * 37 / 40);
+            else context.moveTo(300 - tick[0] * 39 / 40, 300 - tick[1] * 39 / 40);
+            context.lineTo(300 - tick[0], 300 - tick[1]);
+        });
+    }
+
+    drawElement(context, "#000", 1, function() {
+        context.moveTo(300, 300);
+        context.lineTo(300 - minutes[0], 300 - minutes[1]);
+        context.moveTo(300, 300);
+        context.lineTo(300 - heures[0] * 7 / 10, 300 - heures[1] * 7 / 10);
+    });
+    drawElement(context, "#AA0000", 1, function() {
+        context.moveTo(300, 300);
+        context.lineTo(300 - trotteuse[0], 300 - trotteuse[1]);
+    });
+}</pre>
+        </li>
+    </ol>
+</section>
+
+<section>
+    <h2 class="title">Exercice 2 : <span class="subtitle">Horloges de différentes tailles</span></h2>
+    <ol>
+        <li>
+            <h3>Faites en sorte que la taille de l'horloge puisse varier en fonction de la taille du canvas.</h3>
+            <p>On réutilise une énorme partie du code de l'exercice précédent. Sauf que dans note cas, on doit
+                déterminer la taille de l'horloge en fonction de la taille du canvas. Une fois ceci déterminé, toutes
+                les coordonées en dépendent directement. On détermine la taille de l'horlogie de cette façon :</p>
+            <pre>let scale = Math.min(context.canvas.width, context.canvas.height);</pre>
+        </li>
+
+        <li>
+            <h3>Faites en sorte d'avoir une fonction startClock qui prend en paramètre l'id d'un canvas qui sert
+                d'unique point d'entrée pour faire fonctionner une horloge.</h3>
+            <p>Pour cela, on modifie la fonction comme ceci :</p>
+            <pre>function startClock(clockId) {
+    window.setInterval(function () {
+        let context = document.getElementById(clockId).getContext("2d");
+        clear(context);
+        draw(context, new Date());
+    }, 1000);
+}</pre>
+        </li>
+    </ol>
+</section>
+
+</body>
+</html>
