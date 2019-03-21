@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Compte-rendu de TP 7</title>
+
+    <link rel="stylesheet" href="compte-rendu-tp.css">
+
+</head>
+<body>
+<div>
+    <h1 class="title">Compte-rendu du TP 7</h1>
+    <div class="right name">Irwin Madet</div>
+</div>
+
+<div class="divider"></div>
+
+<section>
+    <h2 class="title">Exercice 1 : <span class="subtitle">Tableaux</span></h2>
+    <ol>
+        <li>
+            <h3>Expliquez ce que fait le code sans pour autant regarder le code de <code>graph.js</code>.</h3>
+            <p>À première vue, la page semble schématiser un tableaux de nombres.</p>
+        </li>
+
+        <li>
+            <h3>On cherche à écrire une fonction <code>addThree()</code> qui prend en paramètre un tableau et retourne
+                un nouveau
+                tableau qui contient le même nombre de cases que le tableau pris en paramètre et dont les valeurs des
+                cases est la valeur de la case de même index du tableau pris en paramètre augmentée de trois. </h3>
+            <p>On boucle simplement le tableau de départ pour remplir un tableau final en ajoutant 3 à chaque membres
+                :</p>
+            <pre>function addThree(array) {
+    let result = [];
+    for (let i = 0; i < array.length; i++) result[i] = array[i] + 3;
+    return result
+}</pre>
+        </li>
+
+        <li>
+            <h3>Utiliser la fonction <code>applyForEachElement()</code>.</h3>
+            <p><i>Code :</i></p>
+            <pre>function addThree2(array) {
+    let result = array.slice();
+    applyForEachElement(result, function (e) {
+        return e + 3;
+    });
+    return result
+}</pre>
+        </li>
+
+        <li>
+            <h3>Utiliser <code>map()</code> dans la fonction <code>addThree()</code>.</h3>
+            <p>On met en commentaire le code prédécemment rédigé pour cette fonction. Maintenant la fonction ressemble à
+                ceci :</p>
+            <pre>function addThree(array) {
+    array.map(e => e + 3);
+}</pre>
+        </li>
+
+        <li>
+            <h3>On souhaite afficher les valeurs du tableau trié en utilisant la méthode <code>sort</code> sur un
+                tableau.</h3>
+            <p>Contrairement aux fonctions <code>map()</code> et <code>filter()</code>, la fonction <code>sort()</code>
+                retourne le tableau trié.</p>
+            <p>Afin de trier les objets en tant que nombres, on utlise une fonction anonyme :</p>
+            <pre>function sortedArray(array) {
+    return array.sort((a, b) => a - b);
+}</pre>
+        </li>
+    </ol>
+</section>
+
+<section>
+    <h2 class="title">Exercice 2 : <span class="subtitle">MinMax</span></h2>
+    <ol>
+        <li>
+            <h3>On cherche à écrire une fonction <code>minmax()</code> qui prend en paramètre un tableau, calcule le
+                minimum et le maximum de ce tableau et renvoie les deux valeurs sous forme d'un nouveau tableau à 2
+                cases dont la première case est le minimum et la seconde case est le maximum. </h3>
+            <p>On parcours le tableau et on retourne la plus petite valeur et la plus grande valeur dans un tableau.</p>
+            <p><i>Code :</i></p>
+            <pre>function minmax(array) {
+    let minimum = array[0];
+    let maximum = array[0];
+    for (let i = 0; i < array.length; i++) {
+        if (array[i] > maximum) maximum = array[i];
+        if (array[i] < minimum) minimum = array[i];
+    }
+    return [minimum, maximum];
+}</pre>
+        </li>
+
+        <li>
+            <h3>En fait, au lieu d'écrire la boucle à la main, il est possible d'utiliser la méthode
+                <code>reduce()</code> sur un tableau qui permet d'effectuer un même calcul sur chaque valeur. </h3>
+            <p><i>Code :</i></p>
+            <pre>function minmax2(array) {
+    return [array.reduce((acc, val) => val < acc ? val : acc),
+        array.reduce((acc, val) => val > acc ? val : acc)]
+}</pre>
+        </li>
+
+        <li>
+            <h3>En fait, retourner un tableau avec 2 cases stockant le minimum et le maximum, n'est pas terrible comme
+                convention, il faut mieux renvoyer un dictionnaire avec les clefs <code>min</code> et <code>max</code>.
+            </h3>
+            <p><i>Syntaxe du dictionnaire :</i></p>
+            <pre>dico = {"min": 3, "max": 7};</pre>
+            <p><i>Code :</i></p>
+            <pre>function minmax3(array) {
+    return {
+        "min": array.reduce((acc, val) => val < acc ? val : acc),
+        "max": array.reduce((acc, val) => val > acc ? val : acc)
+    }
+}</pre>
+        </li>
+    </ol>
+</section>
+
+<section>
+    <h2 class="title">Exercice 3 : <span class="subtitle">Pour les plus balèzes...</span></h2>
+    <ol>
+        <li>
+            <h3>Ecrivez dans un premier temps une fonction <code>swap()</code> qui permet d'échanger deux cases du
+                tableau.
+                Puis écrivez la fonction <code>randomArray()</code> qui mélange les valeurs du tableau pris en
+                paramètre. </h3>
+            <p><i>Fonction <code>swap()</code> :</i></p>
+            <pre>function swap(array, i, j) {
+    let temp = array[i];
+    array[i] = array[j];
+    array[j] = temp;
+}</pre>
+            <p><i>Fonction <code>randomArray()</code> :</i></p>
+            <pre>function randomArray(array) {
+    for (let i = 0; i < array.length; i++) {
+        swap(array, i, random(array.length - 1));
+    }
+}</pre>
+        </li>
+
+        <li>
+            <h3>Il est possible de diminuer le nombre de tests fait par la fonction minmax. En effet, si au lieu de
+                faire évoluer le min et le max pour chaque case du tableau, on commence par lire deux valeurs de cases
+                consécutives, regarder quelle est la plus grande puis la comparer avec le max, dans ce cas, la valeur la
+                plus petite ne doit être comparée qu'avec le min donc chaque case n'a pas besoin d'être comparée et avec
+                le max et avec le min.</h3>
+            <p><i>Code :</i></p>
+            <pre>function minmax4(array) {
+    let min = array[0];
+    let max = array[0];
+    for (let i = 0; i < array.length; i+=2) {
+        if (i + 1 === array.length) {
+            if (array[i + 1] < min) min = array[i + 1];
+            if (array[i + 1] > max) min = array[i + 1];
+        }
+        if (array[i] < array[i + 1]) {
+            if (array[i] < min) min = array[i];
+            if (array[i + 1] > max) max = array[i + 1];
+        } else {
+            if (array[i + 1] < min) min = array[i + 1];
+            if (array[i] > max) max = array[i];
+        }
+    }
+    return [min, max]
+}</pre>
+        </li>
+    </ol>
+</section>
+</body>
+</html>

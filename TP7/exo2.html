@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<!-- saved from url=(0076)http://monge.univ-mlv.fr/ens/Licence/L1/2017-2018/progweb/src/td07/exo2.html -->
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+</head>
+<body>
+<h2>Min/Max</h2>
+<p>
+    <script>
+        "use strict";
+
+        function minmax(array) {
+            let minimum = array[0];
+            let maximum = array[0];
+            for (let i = 0; i < array.length; i++) {
+                if (array[i] > maximum) maximum = array[i];
+                if (array[i] < minimum) minimum = array[i];
+            }
+            return [minimum, maximum];
+        }
+
+        let array = [8, 2, 4, 0, 3, 9, 1, 5, 7, 6];
+        let minAndMax = minmax(array);
+        document.write("min " + minAndMax[0] + " max " + minAndMax[1]);
+    </script>
+</p>
+<h2>Min/Max 2: The Road Warrior</h2>
+<p>
+    <script>
+
+        function minmax2(array) {
+            return [array.reduce((acc, val) => val < acc ? val : acc),
+                array.reduce((acc, val) => val > acc ? val : acc)]
+        }
+
+        let minAndMax2 = minmax2(array);
+        document.write("min " + minAndMax2[0] + " max " + minAndMax2[1]);
+    </script>
+</p>
+<h2>Min/Max 3: Beyond Thunderdome</h2>
+<p>
+    <script>
+        dico = {"min": 3, "max": 7};
+
+        function minmax3(array) {
+            return {
+                "min": array.reduce((acc, val) => val < acc ? val : acc),
+                "max": array.reduce((acc, val) => val > acc ? val : acc)
+            }
+        }
+
+        let minAndMax3 = minmax3(array);
+        document.write("min " + minAndMax3.min + " max " + minAndMax3.max);
+    </script>
+</p>
+
+
+</body>
+</html>
