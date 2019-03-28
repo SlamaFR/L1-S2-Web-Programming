@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Compte-rendu de TP 8</title>
+
+    <link rel="stylesheet" href="compte-rendu-tp.css">
+
+</head>
+<body>
+<div>
+    <h1 class="title">Compte-rendu du TP 8</h1>
+    <div class="right name">Irwin Madet</div>
+</div>
+
+<div class="divider"></div>
+
+<section>
+    <h2 class="title">Exercice 1 : <span class="subtitle">Memory</span></h2>
+    <ol>
+        <li>
+            <h3>Recopier l'ensemble des ressources.</h3>
+        </li>
+
+        <li>
+            <h3>A quoi sert la fonction <code>MemoryGame</code> ?</h3>
+            <p>Cette fonction créer l'objet qui représente notre jeu.</p>
+        </li>
+
+        <li>
+            <h3>Expliquer le code suivant :</h3>
+            <pre><i>MemoryGame.prototype.build = function build(div) {
+  // TODO
+}</i></pre>
+            <p>Ce code permet de définir la fonction <code>build</code> en tant que fonction appartenant à l'objet
+                <code>MemoryGame</code>.</p>
+            <p><code>MemoryGame.prototype</code> permet de stocker toutes les fonctions de notre objet.</p>
+        </li>
+
+        <li>
+            <h3>Ecrivez le code de la fonction <code>MemoryGame</code> pour stocker le tableau des images et l'image de
+                dos de
+                carte.</h3>
+            <p><i>Code :</i></p>
+            <pre>function MemoryGame(images, blank) {
+    this.images = images;
+    this.blank = blank;
+}</pre>
+            <h3>Puis écrivez le code de la méthode build afin que le nombre d'images soit affiché à l'intérieur de la
+                balise <code>div</code> prise en paramètre.</h3>
+            <p><i>Code :</i></p>
+            <pre>MemoryGame.prototype.build = function build(div) {
+    div.innerHTML = this.images.length;
+};</pre>
+        </li>
+
+        <li>
+            <h3>Que fait la fonction <code>shuffleCards</code> et en quoi cela aide pour la mise au point du programme ?
+            </h3>
+            <p>La fonction génère une liste de <i>n</i> paires d'entiers croissants. Cela permettra de générer les
+                cartes par paire.</p>
+        </li>
+
+        <li>
+            <h3>Modifiez le méthode <code>build</code> pour afficher autant de cartes que de cases du tableau
+                <code>cards</code>.</h3>
+            <p><i>Code :</i></p>
+            <pre>MemoryGame.prototype.build = function build(div) {
+    for (let i = 0; i < this.images.length; i++) {
+        div.innerHTML += "&lt;div&gt;&lt;img src=&apos;&quot; + this.blank + &quot;&apos;&gt;&lt;/div&gt;"
+    }
+};</pre>
+        </li>
+
+        <li>
+            <h3>On souhaite ajouter une fonction permettant de savoir lorsque l'utilisateur a cliqué sur une carte.</h3>
+            <p>On utilise l'indice <i>i</i> de notre boucle pour associer à chaque carte, un indice.</p>
+            <p><i>Code :</i></p>
+            <pre>for (let i = 0; i < this.images.length; i++) {
+    div.innerHTML += "&lt;div&gt;&lt;a href=&apos;#&apos; id=&apos;&quot; + i + &quot;&apos; onclick=&apos;retourne(&quot; + i + &quot;);&apos;&gt;&lt;img src=&apos;&quot; + this.blank + &quot;&apos;&gt;&lt;/a&gt;&lt;/div&gt;"
+}</pre>
+        </li>
+
+        <li>
+            <h3>On souhaite maintenant pouvoir afficher l'image correspondant à une carte lorsque l'on clique sur la
+                carte. Le problème est que le tableau des images doit être stocké dans un objet MemoryGame et qu'il faut
+                que cet objet soit accessible à la fonction qui est exécutée lors d'un clic. </h3>
+            <p><i>Code :</i></p>
+            <pre>MemoryGame.prototype.retourne = function retourne(index) {
+    document.getElementById(index).src = this.images[index];
+};</pre>
+            <p><i>Code JS inclut dans l'HTML :</i></p>
+            <pre>function retourne(i) {
+    game.retourne(i);
+}</pre>
+        </li>
+        <li>
+            <h3>Il faut maintenant implanter la mécanique du jeu.</h3>
+            <p><i>Code :</i></p>
+            <pre>if (!document.getElementById(index).src.endsWith(this.blank) || !this.canClick) return;
+
+document.getElementById(index).src = this.images[index];
+
+if (this.lastImage === undefined) this.lastImage = index;
+else {
+    if (this.images[this.lastImage] === this.images[index]) this.lastImage = undefined;
+    else {
+        this.canClick = false;
+        setTimeout(() => {
+            document.getElementById(this.lastImage).src = this.blank;
+            document.getElementById(index).src = this.blank;
+            this.lastImage = undefined;
+            this.canClick = true;
+        }, 500);
+
+    }
+}</pre>
+        </li>
+
+        <li>
+            <h3>Comment faire pour ne pas prendre en compte les cartes déjà retournées (il y a deux cas) ?</h3>
+            <p><i>Voir 9</i></p>
+        </li>
+
+        <li>
+            <h3>Si l'image n'est pas identique, on souhaite avoir le temps de voir la face de la seconde carte avant de
+                les retourner. Pour cela, le plus simple est d'attendre 500 ms avant de retourner les cartes. Comment
+                écrire cela en JavaScript ?</h3>
+            <p><i>Voir 9</i></p>
+        </li>
+
+        <li>
+            <h3>Enfin, modifiez <code>shuffleCards</code> pour que le tableau des cartes soit mélangé de façon
+                aléatoire.</h3>
+            <p><i>Code :</i></p>
+            <pre>function shuffleCards(array) {
+    let cards = [];
+    for (let i = 0; i < array.length; i++) {
+        cards.push(array[i]);
+        cards.push(array[i]);
+    }
+    console.log(cards);
+    for (let i = 0; i < cards.length; i++) {
+        let j = Math.floor((cards.length - 1) * Math.random());
+        let temp = cards[i];
+        cards[i] = cards[j];
+        cards[j] = temp;
+    }
+    console.log(cards);
+    return cards;
+}</pre>
+        </li>
+    </ol>
+</section>
+
+<section>
+    <h2 class="title">Exercice 2 : <span class="subtitle">Pour les plus balèzes...</span></h2>
+    <p><i>Code :</i></p>
+    <pre>class MemoryGame {
+
+    constructor(images, blank) {
+        this.images = images;
+        this.blank = blank;
+        this.canClick = true;
+    }
+
+    build(div) {
+        for (let i = 0; i < this.images.length; i++) {
+            div.innerHTML += "&lt;div&gt;&lt;a href=&apos;#&apos; id=&apos;&quot; + i + &quot;&apos; onclick=&apos;retourne(&quot; + i + &quot;);&apos;&gt;&lt;img src=&apos;&quot; + this.blank + &quot;&apos;&gt;&lt;/a&gt;&lt;/div&gt;"
+        }
+    }
+
+    retourne(index) {
+        if (!document.getElementById(index).src.endsWith(this.blank) || !this.canClick) return;
+
+        document.getElementById(index).src = this.images[index];
+
+        if (this.lastImage === undefined) this.lastImage = index;
+        else {
+            if (this.images[this.lastImage] === this.images[index]) this.lastImage = undefined;
+            else {
+                this.canClick = false;
+                setTimeout(() => {
+                    document.getElementById(this.lastImage).src = this.blank;
+                    document.getElementById(index).src = this.blank;
+                    this.lastImage = undefined;
+                    this.canClick = true;
+                }, 500);
+
+            }
+        }
+    }
+
+}</pre>
+</section>
+
+
+</body>
+</html>
