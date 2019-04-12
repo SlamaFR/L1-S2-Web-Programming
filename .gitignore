@@ -2,5 +2,5 @@
 
 *.zip
 
-./idea
+.idea/
 compte-rendu-tp.css
